@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  pdf-math-translate:
+    build: .
+    ports:
+      - "7860:7860"  # Mở cổng 7860 cho ứng dụng
+    volumes:
+      - .:/app  # Ánh xạ thư mục hiện tại (mã nguồn) vào thư mục /app trong container
+    environment:
+      - PYTHONUNBUFFERED=1  # Đảm bảo không cache output khi chạy Python
+    command: ["pdf2zh", "-i"]  # Lệnh mặc định để chạy ứng dụng
+    # Đảm bảo cài đặt thư viện cần thiết khi có thay đổi
+    restart: unless-stopped  # Container sẽ tự động khởi động lại khi dừng hoặc khi có sự cố
